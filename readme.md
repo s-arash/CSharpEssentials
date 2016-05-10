@@ -5,7 +5,7 @@ refactorings that make it easy to work with C# 6 language features,
 such as [nameof expressions](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#nameof-expressions),
 [getter-only auto-properties](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#getter-only-auto-properties),
 [expression-bodied members](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#expression-bodied-function-members),
-and [string interpolation](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#string-interpolation).
+ [string interpolation](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#string-interpolation), and [null-conditional operators](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#null-conditional-operators).
 
 Supports Visual Studio 2015 ([link](https://visualstudiogallery.msdn.microsoft.com/a4445ad0-f97c-41f9-a148-eae225dcc8a5?SRC=Home))
 
@@ -47,3 +47,8 @@ call into an interpolated strings.
 
 ![](http://i.imgur.com/Q1CMKD5.jpg)
 
+### Use Null-Conditional Operators
+
+Identifies when invocations guarded with null-check if statements can be simplfied using null-conditional operators.
+
+![](http://i.imgur.com/8YhAnfM.png)

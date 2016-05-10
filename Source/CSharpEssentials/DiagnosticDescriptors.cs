@@ -37,5 +37,22 @@ namespace CSharpEssentials
             category: DiagnosticCategories.Language,
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
+
+        public static readonly DiagnosticDescriptor UseNullConditionalMemberAccess = new DiagnosticDescriptor(
+            id: DiagnosticIds.UseNullConditional,
+            title: "Replace null-check if statement with null-conditional member access",
+            messageFormat: "Consider replacing the null-check if statement with null-conditional member access",
+            category: DiagnosticCategories.Language,
+            defaultSeverity: DiagnosticSeverity.Info,
+            isEnabledByDefault: true);
+
+        public static readonly DiagnosticDescriptor UseNullConditionalMemberAccessFadedToken = new DiagnosticDescriptor(
+            id: "UseNullConditionalMemberAccessFadedToken",
+            title: UseNullConditionalMemberAccess.Title,
+            messageFormat: UseNullConditionalMemberAccess.MessageFormat,
+            category: DiagnosticCategories.Language,
+            defaultSeverity: DiagnosticSeverity.Hidden,
+            isEnabledByDefault: true,
+            customTags: new[] { WellKnownDiagnosticTags.Unnecessary });
     }
 }

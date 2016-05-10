@@ -11,6 +11,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ConvertToInterpolatedString\ConvertToInterpolatedStringRefactoring.cs" />
+    <Compile Include="NullCheckToNullConditional\NullCheckToNullConditionalCodeFix.cs" />
+    <Compile Include="NullCheckToNullConditional\NullCheckToNullConditionalAnalyzer.cs" />
     <Compile Include="DiagnosticCategories.cs" />
     <Compile Include="DiagnosticDescriptors.cs" />
     <Compile Include="DiagnosticIds.cs" />

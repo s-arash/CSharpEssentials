@@ -5,5 +5,6 @@
         public const string UseNameOf = "CSE0001";
         public const string UseGetterOnlyAutoProperty = "CSE0002";
         public const string UseExpressionBodiedMember = "CSE0003";
+        public const string UseNullConditional = "CSE0004";
     }
 }

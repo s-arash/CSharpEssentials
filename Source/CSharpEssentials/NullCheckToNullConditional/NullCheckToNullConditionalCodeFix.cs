@@ -10,6 +10,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Formatting;
 
 namespace CSharpEssentials.NullCheckToNullConditional
 {
@@ -52,9 +53,9 @@ namespace CSharpEssentials.NullCheckToNullConditional
                     if (nullableExpression != null)
                     {
                         var block = ifStatement.Statement as BlockSyntax;
-                        var bodyExpressionStatement = (block?.Statements.Count == 1) ?
+                        var bodyExpressionStatementOriginal = (block?.Statements.Count == 1) ?
                              block.Statements[0] as ExpressionStatementSyntax : ifStatement.Statement as ExpressionStatementSyntax;
-
+                        var bodyExpressionStatement = bodyExpressionStatementOriginal;
                         if (bodyExpressionStatement != null)
                         {
                             var invocation = bodyExpressionStatement.Expression as InvocationExpressionSyntax;
@@ -84,9 +85,13 @@ namespace CSharpEssentials.NullCheckToNullConditional
                                 var nullableExpressionNullConditionalMemberCall = ConvertToNullConditionalAccess(nullableExpressionMemberCall);
                                 if (nullableExpressionNullConditionalMemberCall != null)
                                 {
+                                    var bodyExpressionStatementTrailingTrivia = bodyExpressionStatementOriginal.GetTrailingTrivia();
+                                    var ifStatementTrailingTrivia = ifStatement.GetTrailingTrivia().Except(bodyExpressionStatementTrailingTrivia);
                                     return bodyExpressionStatement
                                         .ReplaceNode(nullableExpressionMemberCall, nullableExpressionNullConditionalMemberCall)
-                                        .WithTriviaFrom(ifStatement);
+                                        .WithLeadingTrivia(ifStatement.GetLeadingTrivia().AddRange(nullableExpressionMemberCall.GetLeadingTrivia()))
+                                        .WithTrailingTrivia(nullableExpressionMemberCall.GetTrailingTrivia().AddRange(bodyExpressionStatementTrailingTrivia).AddRange(block?.CloseBraceToken.LeadingTrivia ?? Enumerable.Empty<SyntaxTrivia>()).AddRange(ifStatementTrailingTrivia))
+                                        .WithAdditionalAnnotations(Formatter.Annotation);
                                 }
                             }
                         }

@@ -39,7 +39,7 @@ class SuperAwesomeCode
         [Test]
         public void SimpleTest()
         {
-            var markupCode = InsertCode("[|if (null != d )  d.m(blah, blah);|]");
+            var markupCode = InsertCode("[|if (null != d )\r\n            d.m(blah, blah);|]");
             var expected = InsertCode("d?.m(blah, blah);");
             TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseNullConditionalMemberAccess);
         }
@@ -81,6 +81,32 @@ class SuperAwesomeCode
         {
             var markupCode = InsertCode("[|if (a.b() != null) { a.b().c[0].ToString(); }|]");
             var expected = InsertCode("a.b()?.c[0].ToString();");
+            TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseNullConditionalMemberAccess);
+        }
+
+        [Test]
+        public void TestTriviaIsPreserved()
+        {
+            var markupCode = 
+@"class Trivial{
+    void F(object o){
+        [|//comment1
+        if (o != null) {
+            //comment2
+            o.ToString();
+        }|]
+    }
+}";
+            var expected =
+@"class Trivial{
+    void F(object o){
+        //comment1
+        //comment2
+        o?.ToString();
+
+    }
+}";
+
             TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseNullConditionalMemberAccess);
         }
 
